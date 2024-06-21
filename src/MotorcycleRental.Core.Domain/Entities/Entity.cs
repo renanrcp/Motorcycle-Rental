@@ -2,7 +2,7 @@ using MotorcycleRental.Core.Domain.Primitives;
 
 namespace MotorcycleRental.Core.Domain.Entities;
 
-public abstract class BaseEntity
+public abstract class Entity
 {
     private readonly List<DomainEvent> _domainEvents = [];
 
