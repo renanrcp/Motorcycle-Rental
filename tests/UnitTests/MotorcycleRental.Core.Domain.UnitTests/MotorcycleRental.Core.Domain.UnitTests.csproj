@@ -6,4 +6,8 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\MotorcycleRental.Core.Domain\MotorcycleRental.Core.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
