@@ -1,13 +1,14 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using MotorcycleRental.Core.Domain.Abstractions;
 
 namespace MotorcycleRental.Core.Infrastructure.Contexts.Tests;
 
 internal delegate Task SeedDelegate(TestContext dbContext);
 
-internal abstract class TestContext(DbContextOptions options, IPublisher publisher)
-    : ApplicationContext(options, publisher)
+internal abstract class TestContext(DbContextOptions options, IPublisher publisher, IDomainEventSaver domainEventSaver)
+    : ApplicationContext(options, publisher, domainEventSaver)
 {
     protected IDbContextTransaction? _transaction;
 

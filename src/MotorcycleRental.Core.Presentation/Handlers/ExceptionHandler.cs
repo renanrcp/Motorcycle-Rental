@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
+using MotorcycleRental.Core.Application.Abstractions;
 using MotorcycleRental.Core.Application.Errors;
+using MotorcycleRental.Core.Application.Events;
 using MotorcycleRental.Core.Domain.Abstractions;
 using MotorcycleRental.Core.Presentation.Filters;
 using MotorcycleRental.Core.Presentation.Responses;
@@ -9,26 +12,28 @@ using System.Net;
 
 namespace MotorcycleRental.Core.Presentation.Handlers;
 
-public class ExceptionHandler : IExceptionHandler
+public class ExceptionHandler(IEventSaver eventSaver) : IExceptionHandler
 {
+    private readonly IEventSaver _eventSaver = eventSaver;
 
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         var actionContext = httpContext.GetActionContext();
 
-        if (!httpContext.Items.TryGetValue(ResponseConvetionFilter.ERROR_IDENTIFIER, out var errorObj) || errorObj is not Error error)
+        if (!httpContext.Items.TryGetValue(ResponseConventionFilter.ERROR_IDENTIFIER, out var errorObj) || errorObj is not Error error)
         {
             error = InternalServerError.CreateUnkwnonError(exception);
         }
 
-        // TODO: Register error event
-        var eventId = Guid.NewGuid().ToString();
+        var exceptionEvent = new ExceptionEvent(ObjectId.GenerateNewId(), exception);
+
+        await _eventSaver.SaveEventAsync(exceptionEvent);
 
         var errorResponse = new ErrorResponse()
         {
             Code = error.Code,
             Error = error.Description,
-            EventId = eventId,
+            EventId = exceptionEvent.Id.ToString(),
         };
 
         var result = new OkObjectResult(errorResponse)

@@ -1,17 +1,14 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using MotorcycleRental.Core.Application.Errors;
-using MotorcycleRental.Core.Domain.Abstractions;
-using MotorcycleRental.Core.Presentation.Handlers;
 using MotorcycleRental.Core.Presentation.Responses;
 using MotorcycleRental.Core.Presentation.Results;
 using System.Net;
 
 namespace MotorcycleRental.Core.Presentation.Filters;
 
-public class ResponseConvetionFilter : IAsyncAlwaysRunResultFilter
+public class ResponseConventionFilter : IAsyncAlwaysRunResultFilter
 {
     public const string ERROR_IDENTIFIER = "MotorcycleRental.HttpContext.Error";
 
@@ -49,7 +46,7 @@ public class ResponseConvetionFilter : IAsyncAlwaysRunResultFilter
         if (exception != null)
         {
             context.HttpContext.Items.Add(ERROR_IDENTIFIER, error);
-            var exceptionHandler = context.HttpContext.RequestServices.GetRequiredService<ExceptionHandler>();
+            var exceptionHandler = context.HttpContext.RequestServices.GetRequiredService<IExceptionHandler>();
             _ = await exceptionHandler.TryHandleAsync(context.HttpContext, exception, context.HttpContext.RequestAborted);
             await next();
             return;

@@ -1,11 +1,12 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using MotorcycleRental.Core.Domain.Abstractions;
 
 namespace MotorcycleRental.Core.Infrastructure.Contexts.Tests;
 
-internal abstract class InMemoryTestContext(DbContextOptions options, IPublisher publisher)
-    : TestContext(options, publisher)
+internal abstract class InMemoryTestContext(DbContextOptions options, IPublisher publisher, IDomainEventSaver domainEventSaver)
+    : TestContext(options, publisher, domainEventSaver)
 {
     protected static DbContextOptions<TContext> InternalCreateOptions<TContext>()
         where TContext : InMemoryTestContext

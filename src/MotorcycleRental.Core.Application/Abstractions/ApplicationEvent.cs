@@ -2,11 +2,11 @@ using MediatR;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace MotorcycleRental.Core.Domain.Primitives;
+namespace MotorcycleRental.Core.Application.Abstractions;
 
-public record DomainEvent : INotification
+public record ApplicationEvent : INotification
 {
-    public DomainEvent(ObjectId id)
+    public ApplicationEvent(ObjectId id)
     {
         Id = id;
     }

@@ -1,12 +1,15 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MotorcycleRental.Core.Domain.Abstractions;
 using MotorcycleRental.Core.Domain.Entities;
 
 namespace MotorcycleRental.Core.Infrastructure.Contexts;
 
-public abstract class ApplicationContext(DbContextOptions options, IPublisher publisher) : DbContext(options)
+public abstract class ApplicationContext(DbContextOptions options, IPublisher publisher, IDomainEventSaver domainEventSaver) : DbContext(options)
 {
     private readonly IPublisher _publisher = publisher;
+
+    private readonly IDomainEventSaver _domainEventSaver = domainEventSaver;
 
     protected virtual void OnSaveChanges()
     {
@@ -34,6 +37,7 @@ public abstract class ApplicationContext(DbContextOptions options, IPublisher pu
 
         foreach (var domainEvent in domainEvents)
         {
+            await _domainEventSaver.SaveEventAsync(domainEvent);
             await _publisher.Publish(domainEvent);
         }
     }
