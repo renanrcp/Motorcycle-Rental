@@ -36,7 +36,7 @@ public class ExceptionHandler(IApplicationEventSaver eventSaver) : IExceptionHan
             EventId = exceptionEvent.Id.ToString(),
         };
 
-        var result = new OkObjectResult(errorResponse)
+        var result = new ObjectResult(errorResponse)
         {
             StatusCode = (int)HttpStatusCode.InternalServerError,
         };
