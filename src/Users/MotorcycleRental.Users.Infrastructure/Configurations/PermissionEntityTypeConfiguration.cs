@@ -9,5 +9,12 @@ public class PermissionEntityTypeConfiguration : IEntityTypeConfiguration<Permis
     public void Configure(EntityTypeBuilder<Permission> builder)
     {
         builder.HasKey(x => x.Name);
+
+        var permissions = Enum.GetNames(typeof(PermissionType))
+                                .Where(x => !x.Equals(PermissionType.None))
+                                .Select(x => Permission.Create(x).Value!)
+                                .ToArray();
+
+        builder.HasData(permissions);
     }
 }

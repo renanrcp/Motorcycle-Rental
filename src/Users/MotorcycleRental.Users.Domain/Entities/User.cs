@@ -41,20 +41,4 @@ public class User : Entity
     {
         return new User(email, name, password);
     }
-
-    public static Result<User> CreateUserWithRole(string email, string name, string password, Role role)
-    {
-        var userResult = Create(email, name, password);
-
-        if (userResult.IsFaulted)
-        {
-            return userResult;
-        }
-
-        var user = userResult.Value!;
-
-        var roleResult = user.AddRole(role);
-
-        return roleResult.Map(() => user);
-    }
 }

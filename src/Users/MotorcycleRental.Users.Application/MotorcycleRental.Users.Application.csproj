@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../../MotorcycleRental.targets" />
+  
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MotorcycleRental.Users.Infrastructure\MotorcycleRental.Users.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Core\MotorcycleRental.Core.Application\MotorcycleRental.Core.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
+</Project>

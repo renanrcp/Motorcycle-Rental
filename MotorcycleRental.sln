@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorcycleRental.Users.Doma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorcycleRental.Users.Infrastructure", "src\Users\MotorcycleRental.Users.Infrastructure\MotorcycleRental.Users.Infrastructure.csproj", "{D8B4E993-80A9-4ECC-B2AC-F53A3727A5BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorcycleRental.Users.Application", "src\Users\MotorcycleRental.Users.Application\MotorcycleRental.Users.Application.csproj", "{412A763D-5177-4546-A3F1-49BDC3B4EF22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,10 @@ Global
 		{D8B4E993-80A9-4ECC-B2AC-F53A3727A5BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8B4E993-80A9-4ECC-B2AC-F53A3727A5BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8B4E993-80A9-4ECC-B2AC-F53A3727A5BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{412A763D-5177-4546-A3F1-49BDC3B4EF22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{412A763D-5177-4546-A3F1-49BDC3B4EF22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{412A763D-5177-4546-A3F1-49BDC3B4EF22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{412A763D-5177-4546-A3F1-49BDC3B4EF22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4DE4E21A-AF45-4B3B-8093-462B0142A515} = {66321724-0D66-4943-8F74-52ECBB719D50}
@@ -106,5 +112,6 @@ Global
 		{156531FE-7496-4F92-937F-9F5A840825C2} = {94CF7589-D24C-4E35-B978-AEB8CBA37275}
 		{083B159A-3853-461D-85C8-375460B32EC7} = {156531FE-7496-4F92-937F-9F5A840825C2}
 		{D8B4E993-80A9-4ECC-B2AC-F53A3727A5BE} = {D23FDBCF-42CE-489F-BB72-CF5F9FC1A51D}
+		{412A763D-5177-4546-A3F1-49BDC3B4EF22} = {D23FDBCF-42CE-489F-BB72-CF5F9FC1A51D}
 	EndGlobalSection
 EndGlobal
