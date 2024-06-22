@@ -7,7 +7,7 @@ using MotorcycleRental.Core.Presentation.Utils;
 
 namespace MotorcycleRental.Core.Presentation.Results;
 
-public class AuthorizationMiddlewareResultHandler : IAuthorizationMiddlewareResultHandler
+public class AuthorizationMiddlewareResultConventionHandler : IAuthorizationMiddlewareResultHandler
 {
     public async Task HandleAsync(RequestDelegate next, HttpContext context, AuthorizationPolicy policy, PolicyAuthorizationResult authorizeResult)
     {

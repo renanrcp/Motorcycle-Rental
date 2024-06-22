@@ -13,7 +13,7 @@ public static class DependencyInjections
 
         services.AddExceptionHandler<ExceptionHandler>();
 
-        services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationMiddlewareResultHandler>();
+        services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationMiddlewareResultConventionHandler>();
 
         return services;
     }
