@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using MotorcycleRental.Core.Application.Errors;
 using MotorcycleRental.Core.Domain.Abstractions;
 using MotorcycleRental.Core.Presentation.Results;
 

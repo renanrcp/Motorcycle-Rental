@@ -6,7 +6,7 @@ using MotorcycleRental.Core.Application.Abstractions;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Bson;
 
-namespace MotorcycleRental.Core.Application.UnitTests;
+namespace MotorcycleRental.Core.Application.UnitTests.Implementations;
 
 public class EventSaverTests
 {
