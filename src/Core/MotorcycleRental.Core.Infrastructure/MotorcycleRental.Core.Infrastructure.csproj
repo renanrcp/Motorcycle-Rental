@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="../../MotorcycleRental.targets" />
+  <Import Project="../../../MotorcycleRental.targets" />
   
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>

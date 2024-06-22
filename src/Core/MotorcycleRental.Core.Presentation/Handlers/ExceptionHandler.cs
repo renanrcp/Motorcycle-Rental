@@ -12,9 +12,9 @@ using System.Net;
 
 namespace MotorcycleRental.Core.Presentation.Handlers;
 
-public class ExceptionHandler(IEventSaver eventSaver) : IExceptionHandler
+public class ExceptionHandler(IApplicationEventSaver eventSaver) : IExceptionHandler
 {
-    private readonly IEventSaver _eventSaver = eventSaver;
+    private readonly IApplicationEventSaver _eventSaver = eventSaver;
 
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
