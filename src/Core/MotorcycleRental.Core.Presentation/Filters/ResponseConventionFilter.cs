@@ -77,6 +77,7 @@ public class ResponseConventionFilter : IAsyncAlwaysRunResultFilter
         {
             StatusCode = (int)statusCode,
         };
+        await next();
     }
 
     private static ObjectResult ConvertAspNetCoreBadRequestToErrorResponse(BadRequestObjectResult badRequestObjectResult)

@@ -5,6 +5,7 @@ using MotorcycleRental.Core.Presentation.Controllers;
 using MotorcycleRental.Core.Presentation.Requirements;
 using MotorcycleRental.Motorcycles.Application.Commands.Create;
 using MotorcycleRental.Motorcycles.Application.Commands.List;
+using MotorcycleRental.Motorcycles.Application.Commands.Update;
 
 namespace MotorcycleRental.Motorcycles.Presentation.Controllers;
 
@@ -30,4 +31,14 @@ public class MotorcyclesController(IMediator mediator) : AuthorizeController
         return ToActionResult(createMotorcycleCommandResult);
     }
 
+    [HttpPatch("{id}")]
+    [RequirePermissions(PermissionType.CanUpdateMotorcycles)]
+    public async Task<IActionResult> Patch([FromRoute] int id, [FromBody] UpdateMotorcycleLicensePlateCommand updateMotorcycleLicensePlateCommand)
+    {
+        updateMotorcycleLicensePlateCommand.Id = id;
+
+        var updateMotorcycleLicensePlateCommandResult = await _mediator.Send(updateMotorcycleLicensePlateCommand);
+
+        return ToActionResult(updateMotorcycleLicensePlateCommandResult);
+    }
 }

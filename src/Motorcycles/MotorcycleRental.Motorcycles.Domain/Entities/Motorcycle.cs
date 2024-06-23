@@ -21,6 +21,13 @@ public class Motorcycle : Entity
 
     public string Model { get; private set; }
 
+    public Result SetLicensePlate(string licensePlate)
+    {
+        LicensePlate = licensePlate;
+
+        return Result.Success;
+    }
+
     public static Result<Motorcycle> Create(string licensePlate, int year, string model)
     {
         var motorcycle = new Motorcycle(licensePlate, year, model);
