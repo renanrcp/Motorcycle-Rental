@@ -5,8 +5,8 @@ using MotorcycleRental.Core.Domain.Abstractions;
 
 namespace MotorcycleRental.Core.Infrastructure.Contexts.Tests;
 
-internal abstract class InMemoryTestContext(DbContextOptions options, IPublisher publisher, IDomainEventSaver domainEventSaver)
-    : TestContext(options, publisher, domainEventSaver)
+internal abstract class InMemoryTestContext(DbContextOptions options, IDomainEventSaver domainEventSaver)
+    : TestContext(options, domainEventSaver)
 {
     protected static DbContextOptions<TContext> InternalCreateOptions<TContext>()
         where TContext : InMemoryTestContext

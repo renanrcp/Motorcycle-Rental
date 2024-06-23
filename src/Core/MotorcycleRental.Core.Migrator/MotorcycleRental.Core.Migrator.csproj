@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MotorcycleRental.Core.Presentation\MotorcycleRental.Core.Presentation.csproj" />
     <ProjectReference Include="..\..\Users\MotorcycleRental.Users.Infrastructure\MotorcycleRental.Users.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Motorcycles\MotorcycleRental.Motorcycles.Infrastructure\MotorcycleRental.Motorcycles.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,8 +7,8 @@ namespace MotorcycleRental.Core.Infrastructure.Contexts.Tests;
 
 internal delegate Task SeedDelegate(TestContext dbContext);
 
-internal abstract class TestContext(DbContextOptions options, IPublisher publisher, IDomainEventSaver domainEventSaver)
-    : ApplicationContext(options, publisher, domainEventSaver)
+internal abstract class TestContext(DbContextOptions options, IDomainEventSaver domainEventSaver)
+    : ApplicationContext(options, domainEventSaver)
 {
     protected IDbContextTransaction? _transaction;
 

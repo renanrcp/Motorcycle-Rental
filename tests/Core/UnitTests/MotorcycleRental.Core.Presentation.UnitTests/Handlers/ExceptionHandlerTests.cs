@@ -52,7 +52,7 @@ public class ExceptionHandlerTests
         httpContext.Items[ResponseConventionFilter.ERROR_IDENTIFIER] = InternalServerError.CreateUnkwnonError(exception);
 
         _mockEventSaver
-            .Setup(saver => saver.SaveEventAsync(It.IsAny<ExceptionEvent>()))
+            .Setup(saver => saver.SaveEventAsync(It.IsAny<ExceptionEvent>(), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
         _mockExecutor
@@ -65,7 +65,7 @@ public class ExceptionHandlerTests
         // Assert
         Assert.True(result);
 
-        _mockEventSaver.Verify(saver => saver.SaveEventAsync(It.Is<ExceptionEvent>(e => e.GetException() == exception)), Times.Once);
+        _mockEventSaver.Verify(saver => saver.SaveEventAsync(It.Is<ExceptionEvent>(e => e.GetException() == exception), It.IsAny<CancellationToken>()), Times.Once);
         _mockExecutor.Verify(executor => executor.ExecuteAsync(It.IsAny<ActionContext>(), It.IsAny<ObjectResult>()), Times.Once);
 
 
@@ -100,7 +100,7 @@ public class ExceptionHandlerTests
         httpContext.RequestServices = serviceProvider;
 
         _mockEventSaver
-            .Setup(saver => saver.SaveEventAsync(It.IsAny<ExceptionEvent>()))
+            .Setup(saver => saver.SaveEventAsync(It.IsAny<ExceptionEvent>(), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
         _mockExecutor
@@ -113,7 +113,7 @@ public class ExceptionHandlerTests
         // Assert
         Assert.True(result);
 
-        _mockEventSaver.Verify(saver => saver.SaveEventAsync(It.Is<ExceptionEvent>(e => e.GetException() == exception)), Times.Once);
+        _mockEventSaver.Verify(saver => saver.SaveEventAsync(It.Is<ExceptionEvent>(e => e.GetException() == exception), It.IsAny<CancellationToken>()), Times.Once);
         _mockExecutor.Verify(executor => executor.ExecuteAsync(It.IsAny<ActionContext>(), It.IsAny<ObjectResult>()), Times.Once);
 
         var executedResult = (ObjectResult)_mockExecutor.Invocations[0].Arguments[1];

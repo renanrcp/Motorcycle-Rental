@@ -9,7 +9,7 @@ public class TestDomainEventSaver : IDomainEventSaver
 
     public IReadOnlyList<DomainEvent> DomainEvents => _domainEvents;
 
-    public Task SaveEventAsync(DomainEvent domainEvent)
+    public Task SaveEventAsync(DomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
         _domainEvents.Add(domainEvent);
 

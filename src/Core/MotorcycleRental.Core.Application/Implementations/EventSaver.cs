@@ -9,7 +9,7 @@ namespace MotorcycleRental.Core.Application.Implementations;
 
 public class EventSaver : IApplicationEventSaver, IDomainEventSaver
 {
-    private readonly IMediator _mediator;
+    private readonly IPublisher _publisher;
 
     private readonly IMongoClient _mongoClient;
 
@@ -19,10 +19,10 @@ public class EventSaver : IApplicationEventSaver, IDomainEventSaver
 
     private readonly IMongoCollection<ApplicationEvent> _applicationEvents;
 
-    public EventSaver(IMongoClient mongoClient, IMediator mediator, IHostEnvironment hostEnvironment)
+    public EventSaver(IMongoClient mongoClient, IPublisher publisher, IHostEnvironment hostEnvironment)
     {
         _mongoClient = mongoClient;
-        _mediator = mediator;
+        _publisher = publisher;
 
         var applicationName = hostEnvironment.ApplicationName
                                                 .Replace(".", string.Empty)
@@ -39,13 +39,13 @@ public class EventSaver : IApplicationEventSaver, IDomainEventSaver
 
     public async Task SaveEventAsync(DomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
-        await _mediator.Publish(domainEvent, cancellationToken);
+        await _publisher.Publish(domainEvent, cancellationToken);
         await _domainEvents.InsertOneAsync(domainEvent, options: null, cancellationToken);
     }
 
     public async Task SaveEventAsync(ApplicationEvent applicationEvent, CancellationToken cancellationToken = default)
     {
-        await _mediator.Publish(applicationEvent, cancellationToken);
+        await _publisher.Publish(applicationEvent, cancellationToken);
         await _applicationEvents.InsertOneAsync(applicationEvent, options: null, cancellationToken);
     }
 }

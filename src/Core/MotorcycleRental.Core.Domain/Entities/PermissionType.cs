@@ -5,4 +5,10 @@ public enum PermissionType
     None = 0,
 
     All = 1,
+
+    CanListMotorcycles = 2,
+
+    CanCreateMotorcycle = 3,
+
+    CanUpdateMotorcycles = 4,
 }

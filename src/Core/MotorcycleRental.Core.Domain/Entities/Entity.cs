@@ -7,7 +7,7 @@ public abstract class Entity
 {
     private readonly List<DomainEvent> _domainEvents = [];
 
-    public int Id { get; }
+    public int Id { get; private set; }
 
     [NotMapped]
     public IReadOnlyList<DomainEvent> DomainEvents => _domainEvents;
