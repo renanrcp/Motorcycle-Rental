@@ -1,15 +1,11 @@
 using MotorcycleRental.Core.Application.Abstractions;
-using MotorcycleRental.Users.Domain.Entities;
-using System.ComponentModel;
+using MotorcycleRental.Users.Application.Responses.Users.Login;
 using System.ComponentModel.DataAnnotations;
 
-namespace MotorcycleRental.Users.Application.Commands.Users;
+namespace MotorcycleRental.Users.Application.Commands.Users.Login;
 
-public class CreateUserCommand : ICommand<User>
+public class LoginUserCommand : ICommand<LoginResponse>
 {
-    [Required]
-    public required string Name { get; init; }
-
     [Required]
     [EmailAddress]
     public required string Email { get; init; }

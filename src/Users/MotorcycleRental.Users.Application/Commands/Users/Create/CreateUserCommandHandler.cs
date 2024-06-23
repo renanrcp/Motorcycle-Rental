@@ -9,7 +9,7 @@ using MotorcycleRental.Users.Infrastructure.Contexts;
 using BC = BCrypt.Net.BCrypt;
 
 
-namespace MotorcycleRental.Users.Application.Commands.Users;
+namespace MotorcycleRental.Users.Application.Commands.Users.Create;
 
 public class CreateUserCommandHandler(UsersDbContext usersDbContext) : ICommandHandler<CreateUserCommand, User>
 {

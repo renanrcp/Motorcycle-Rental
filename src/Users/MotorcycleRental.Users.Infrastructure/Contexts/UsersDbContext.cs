@@ -6,7 +6,7 @@ using MotorcycleRental.Users.Domain.Entities;
 
 namespace MotorcycleRental.Users.Infrastructure.Contexts;
 
-public class UsersDbContext(DbContextOptions options, IPublisher publisher, IDomainEventSaver domainEventSaver)
+public class UsersDbContext(DbContextOptions<UsersDbContext> options, IPublisher publisher, IDomainEventSaver domainEventSaver)
     : ApplicationContext(options, publisher, domainEventSaver)
 {
     public DbSet<User> Users { get; set; }

@@ -13,23 +13,29 @@ public static class DependencyInjection
     public static IServiceCollection AddApplicationContext<TContext>(this IServiceCollection services)
         where TContext : ApplicationContext
     {
+        return services.AddDbContextInternal<TContext>();
+    }
+
+    public static IServiceCollection AddDbContextInternal<TContext>(this IServiceCollection services)
+        where TContext : DbContext
+    {
         services.AddDbContext<TContext>((sp, options) =>
-        {
-            if (sp.GetRequiredService<IHostEnvironment>().IsDevelopment())
-            {
-                _ = options.EnableDetailedErrors();
-                _ = options.EnableSensitiveDataLogging();
-            }
+       {
+           if (sp.GetRequiredService<IHostEnvironment>().IsDevelopment())
+           {
+               _ = options.EnableDetailedErrors();
+               _ = options.EnableSensitiveDataLogging();
+           }
 
-            _ = options.UseApplicationServiceProvider(sp);
-            _ = options.UseLoggerFactory(sp.GetRequiredService<ILoggerFactory>());
+           _ = options.UseApplicationServiceProvider(sp);
+           _ = options.UseLoggerFactory(sp.GetRequiredService<ILoggerFactory>());
 
-            _ = options.UseNpgsql(sp.GetRequiredService<IConfiguration>().GetConnectionString("Postgres"), postgresOptions =>
-            {
-            });
+           _ = options.UseNpgsql(sp.GetRequiredService<IConfiguration>().GetConnectionString("Postgres"), postgresOptions =>
+           {
+           });
 
-            options.UseSnakeCaseNamingConvention();
-        });
+           options.UseSnakeCaseNamingConvention();
+       });
 
         return services;
     }

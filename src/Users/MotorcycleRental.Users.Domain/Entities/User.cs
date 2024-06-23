@@ -30,13 +30,6 @@ public class User : Entity
         return allRolesPermissions.ToList();
     }
 
-    private Result AddRole(Role role)
-    {
-        _roles.Add(role);
-
-        return Result.Success;
-    }
-
     public static Result<User> Create(string email, string name, string password)
     {
         return new User(email, name, password);

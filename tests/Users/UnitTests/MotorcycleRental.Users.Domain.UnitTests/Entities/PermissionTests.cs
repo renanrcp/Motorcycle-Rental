@@ -1,3 +1,4 @@
+using MotorcycleRental.Core.Domain.Entities;
 using MotorcycleRental.Users.Domain.Entities;
 
 namespace MotorcycleRental.Users.Domain.UnitTests.Entities;

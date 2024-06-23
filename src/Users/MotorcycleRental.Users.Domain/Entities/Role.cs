@@ -1,4 +1,5 @@
 using MotorcycleRental.Core.Domain.Abstractions;
+using MotorcycleRental.Core.Domain.Entities;
 
 namespace MotorcycleRental.Users.Domain.Entities;
 

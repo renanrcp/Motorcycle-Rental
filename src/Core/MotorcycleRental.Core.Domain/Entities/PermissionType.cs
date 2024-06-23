@@ -1,4 +1,4 @@
-namespace MotorcycleRental.Users.Domain.Entities;
+namespace MotorcycleRental.Core.Domain.Entities;
 
 public enum PermissionType
 {
