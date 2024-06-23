@@ -47,10 +47,17 @@ public class UserAuthVO
                         .Select(cl => cl.Value)
                         .First();
 
-        var permissions = claims
+        var permissionsClaim = claims
                             .Where(cl => cl.Type == "permissions")
-                            .Select(cl => JsonSerializer.Deserialize<string[]>(cl.Value)!.Select(p => Enum.Parse<PermissionType>(p)))
-                            .First();
+                            .Select(cl => cl.Value)
+                            .FirstOrDefault();
+
+        var permissions =
+            string.IsNullOrWhiteSpace(permissionsClaim)
+                ? []
+                : permissionsClaim?.StartsWith('[') == true
+                    ? JsonSerializer.Deserialize<string[]>(permissionsClaim)!.Select(Enum.Parse<PermissionType>)
+                    : [Enum.Parse<PermissionType>(permissionsClaim!)];
 
         var token = parseToken
             ? httpContext.Request.Headers.Authorization

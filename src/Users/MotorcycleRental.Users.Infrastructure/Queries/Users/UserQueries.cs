@@ -1,6 +1,6 @@
 using MotorcycleRental.Users.Domain.Entities;
 
-namespace MotorcycleRental.Users.Application.Queries.Users;
+namespace MotorcycleRental.Users.Infrastructure.Queries.Users;
 
 public static class UserQueries
 {

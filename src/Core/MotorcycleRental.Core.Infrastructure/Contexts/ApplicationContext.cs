@@ -9,17 +9,17 @@ public abstract class ApplicationContext(DbContextOptions options, IDomainEventS
 {
     private readonly IDomainEventSaver _domainEventSaver = domainEventSaver;
 
-    protected virtual void OnSaveChanges()
+    protected virtual void AfterSaveChanges()
     {
-        var asyncOnSaveChanges = OnSaveChangesAsync();
+        var asyncOnSaveChanges = AfterSaveChangesAsync();
 
         if (!asyncOnSaveChanges.IsCompletedSuccessfully)
         {
-            OnSaveChangesAsync().GetAwaiter().GetResult();
+            AfterSaveChangesAsync().GetAwaiter().GetResult();
         }
     }
 
-    protected virtual async Task OnSaveChangesAsync(CancellationToken cancellationToken = default)
+    protected virtual async Task AfterSaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var domainEvents = ChangeTracker
                             .Entries()
@@ -41,15 +41,19 @@ public abstract class ApplicationContext(DbContextOptions options, IDomainEventS
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
-        OnSaveChanges();
+        var records = base.SaveChanges(acceptAllChangesOnSuccess);
 
-        return base.SaveChanges(acceptAllChangesOnSuccess);
+        AfterSaveChanges();
+
+        return records;
     }
 
     public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
-        await OnSaveChangesAsync(cancellationToken);
+        var records = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 
-        return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        await AfterSaveChangesAsync(cancellationToken);
+
+        return records;
     }
 }

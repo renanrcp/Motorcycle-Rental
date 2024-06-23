@@ -27,7 +27,7 @@ public class ExceptionHandler(IApplicationEventSaver eventSaver) : IExceptionHan
 
         var exceptionEvent = new ExceptionEvent(exception);
 
-        await _eventSaver.SaveEventAsync(exceptionEvent);
+        await _eventSaver.SaveEventAsync(exceptionEvent, cancellationToken);
 
         var errorResponse = new ErrorResponse()
         {

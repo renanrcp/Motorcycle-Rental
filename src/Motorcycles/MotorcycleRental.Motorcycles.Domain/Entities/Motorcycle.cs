@@ -12,10 +12,7 @@ public class Motorcycle : Entity
         Year = year;
         Model = model;
 
-        Raise(new MotorcycleCreatedEvent
-        {
-            LicensePlate = licensePlate,
-        });
+        Raise(new MotorcycleCreatedEvent(this));
     }
 
     public string LicensePlate { get; private set; }
