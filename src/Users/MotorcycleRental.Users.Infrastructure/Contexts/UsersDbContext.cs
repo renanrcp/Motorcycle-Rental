@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using MotorcycleRental.Core.Domain.Abstractions;
 using MotorcycleRental.Core.Infrastructure.Contexts;
+using MotorcycleRental.Deliverers.Domain.Entities;
 using MotorcycleRental.Users.Domain.Entities;
 
 namespace MotorcycleRental.Users.Infrastructure.Contexts;
@@ -18,5 +19,8 @@ public class UsersDbContext(DbContextOptions<UsersDbContext> options, IDomainEve
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(UsersDbContext).Assembly);
+
+        modelBuilder.Ignore<Deliverer>();
+        modelBuilder.Ignore<DelivererImage>();
     }
 }

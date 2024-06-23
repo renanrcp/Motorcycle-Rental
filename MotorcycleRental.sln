@@ -55,6 +55,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorcycleRental.Motorcycle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorcycleRental.Motorcycles.Presentation", "src\Motorcycles\MotorcycleRental.Motorcycles.Presentation\MotorcycleRental.Motorcycles.Presentation.csproj", "{6976543A-DBC0-4363-9AAB-F6CE66B719F5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deliverers", "Deliverers", "{584C05FC-1F5F-4903-ACB5-9D2F906261C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorcycleRental.Deliverers.Domain", "src\Deliverers\MotorcycleRental.Deliverers.Domain\MotorcycleRental.Deliverers.Domain.csproj", "{59B72889-AA3B-4376-944E-438D7B07F968}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorcycleRental.Deliverers.Infrastructure", "src\Deliverers\MotorcycleRental.Deliverers.Infrastructure\MotorcycleRental.Deliverers.Infrastructure.csproj", "{9AB1D475-6E46-411A-8555-B94F2620007B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -132,6 +138,14 @@ Global
 		{6976543A-DBC0-4363-9AAB-F6CE66B719F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6976543A-DBC0-4363-9AAB-F6CE66B719F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6976543A-DBC0-4363-9AAB-F6CE66B719F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59B72889-AA3B-4376-944E-438D7B07F968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59B72889-AA3B-4376-944E-438D7B07F968}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59B72889-AA3B-4376-944E-438D7B07F968}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59B72889-AA3B-4376-944E-438D7B07F968}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AB1D475-6E46-411A-8555-B94F2620007B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AB1D475-6E46-411A-8555-B94F2620007B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AB1D475-6E46-411A-8555-B94F2620007B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AB1D475-6E46-411A-8555-B94F2620007B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4DE4E21A-AF45-4B3B-8093-462B0142A515} = {66321724-0D66-4943-8F74-52ECBB719D50}
@@ -158,5 +172,8 @@ Global
 		{1D18B115-B538-4C50-B329-08FE68A28139} = {469C8342-6B7C-4F9B-92E9-61CCC233C0C6}
 		{F68F6AB7-4E83-4710-8F72-87F2C3DED2CC} = {469C8342-6B7C-4F9B-92E9-61CCC233C0C6}
 		{6976543A-DBC0-4363-9AAB-F6CE66B719F5} = {469C8342-6B7C-4F9B-92E9-61CCC233C0C6}
+		{584C05FC-1F5F-4903-ACB5-9D2F906261C3} = {66321724-0D66-4943-8F74-52ECBB719D50}
+		{59B72889-AA3B-4376-944E-438D7B07F968} = {584C05FC-1F5F-4903-ACB5-9D2F906261C3}
+		{9AB1D475-6E46-411A-8555-B94F2620007B} = {584C05FC-1F5F-4903-ACB5-9D2F906261C3}
 	EndGlobalSection
 EndGlobal
