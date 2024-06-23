@@ -1,6 +1,6 @@
 using MotorcycleRental.Core.Application.Errors;
 
-namespace MotorcycleRental.Users.Application.Errors.Users;
+namespace MotorcycleRental.Users.Application.Commands.Users.Create;
 
 public static class CreateUserErrors
 {

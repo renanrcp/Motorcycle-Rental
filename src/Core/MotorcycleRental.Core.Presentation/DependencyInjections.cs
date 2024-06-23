@@ -1,18 +1,24 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.IdentityModel.Tokens;
+using MotorcycleRental.Core.Application;
 using MotorcycleRental.Core.Domain.Entities;
 using MotorcycleRental.Core.Presentation.Filters;
 using MotorcycleRental.Core.Presentation.Handlers;
 using MotorcycleRental.Core.Presentation.Results;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace MotorcycleRental.Core.Presentation;
 
 public static class DependencyInjections
 {
-    public static IServiceCollection AddPresentationCore(this IServiceCollection services)
+    public static WebApplicationBuilder AddPresentationCore(this WebApplicationBuilder builder)
     {
-        services.AddControllers(o =>
+        builder.AddEnvFileIfDevelopment();
+
+        builder.Services.AddControllers(o =>
         {
             o.Filters.Add<ResponseConventionFilter>(int.MaxValue);
         })
@@ -22,13 +28,35 @@ public static class DependencyInjections
             o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter<PermissionType>());
         });
 
-        services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+        builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
-        services.AddExceptionHandler<ExceptionHandler>();
+        builder.Services.AddExceptionHandler<ExceptionHandler>();
 
-        services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationMiddlewareResultConventionHandler>();
+        builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, AuthorizationMiddlewareResultConventionHandler>();
 
-        return services;
+        builder.Services.AddAuthorization();
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidIssuer = ApplicationCoreConstants.Issuer,
+                ValidAudience = ApplicationCoreConstants.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ApplicationCoreConstants.Key)),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+            };
+        });
+
+        builder.Services.AddScoped<IAuthorizationHandler, RequirePermissionsAuthorizationHandler>();
+
+        return builder;
     }
 
     public static WebApplicationBuilder AddEnvFileIfDevelopment(this WebApplicationBuilder builder)
@@ -57,5 +85,17 @@ public static class DependencyInjections
         }
 
         return builder;
+    }
+
+    public static WebApplication UsePresentationCoreMiddlewares(this WebApplication app)
+    {
+        app.UseExceptionHandler(o => { });
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        return app;
     }
 }

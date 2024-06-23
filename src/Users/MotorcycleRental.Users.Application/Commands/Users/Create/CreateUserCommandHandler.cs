@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MotorcycleRental.Core.Application.Abstractions;
 using MotorcycleRental.Core.Domain.Abstractions;
-using MotorcycleRental.Users.Application.Errors.Users;
 using MotorcycleRental.Users.Application.Queries.Users;
 using MotorcycleRental.Users.Domain.Entities;
 using MotorcycleRental.Users.Infrastructure.Contexts;

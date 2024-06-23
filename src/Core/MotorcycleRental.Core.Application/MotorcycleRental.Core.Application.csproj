@@ -10,4 +10,8 @@
     <ProjectReference Include="..\MotorcycleRental.Core.Infrastructure\MotorcycleRental.Core.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
+  </ItemGroup>
+
 </Project>

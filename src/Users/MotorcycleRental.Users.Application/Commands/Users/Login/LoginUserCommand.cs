@@ -1,10 +1,10 @@
 using MotorcycleRental.Core.Application.Abstractions;
-using MotorcycleRental.Users.Application.Responses.Users.Login;
+using MotorcycleRental.Core.Application.VOs;
 using System.ComponentModel.DataAnnotations;
 
 namespace MotorcycleRental.Users.Application.Commands.Users.Login;
 
-public class LoginUserCommand : ICommand<LoginResponse>
+public class LoginUserCommand : ICommand<UserAuthVO>
 {
     [Required]
     [EmailAddress]

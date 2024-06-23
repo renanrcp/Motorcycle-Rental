@@ -65,7 +65,7 @@ public class ExceptionHandlerTests
         // Assert
         Assert.True(result);
 
-        _mockEventSaver.Verify(saver => saver.SaveEventAsync(It.Is<ExceptionEvent>(e => e.Exception == exception)), Times.Once);
+        _mockEventSaver.Verify(saver => saver.SaveEventAsync(It.Is<ExceptionEvent>(e => e.GetException() == exception)), Times.Once);
         _mockExecutor.Verify(executor => executor.ExecuteAsync(It.IsAny<ActionContext>(), It.IsAny<ObjectResult>()), Times.Once);
 
 
@@ -113,7 +113,7 @@ public class ExceptionHandlerTests
         // Assert
         Assert.True(result);
 
-        _mockEventSaver.Verify(saver => saver.SaveEventAsync(It.Is<ExceptionEvent>(e => e.Exception == exception)), Times.Once);
+        _mockEventSaver.Verify(saver => saver.SaveEventAsync(It.Is<ExceptionEvent>(e => e.GetException() == exception)), Times.Once);
         _mockExecutor.Verify(executor => executor.ExecuteAsync(It.IsAny<ActionContext>(), It.IsAny<ObjectResult>()), Times.Once);
 
         var executedResult = (ObjectResult)_mockExecutor.Invocations[0].Arguments[1];

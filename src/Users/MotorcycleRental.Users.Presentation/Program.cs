@@ -5,16 +5,13 @@ using MotorcycleRental.Core.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddEnvFileIfDevelopment();
+builder.AddPresentationCore();
 
 builder.Services.AddApplicationCore(typeof(CreateUserCommand).Assembly);
 builder.Services.AddInfrastructure();
-builder.Services.AddPresentationCore();
 
 var app = builder.Build();
 
-app.UseExceptionHandler(o => { });
-
-app.MapControllers();
+app.UsePresentationCoreMiddlewares();
 
 app.Run();

@@ -61,7 +61,7 @@ public class EventSaverTests
     public async Task SaveEventAsync_ApplicationEvent_ShouldInsertApplicationEvent()
     {
         // Arrange
-        var applicationEvent = new ApplicationEvent(ObjectId.GenerateNewId());
+        var applicationEvent = new ApplicationEvent();
 
         // Act
         await _eventSaver.SaveEventAsync(applicationEvent);
