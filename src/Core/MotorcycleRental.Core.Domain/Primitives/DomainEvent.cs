@@ -6,11 +6,8 @@ namespace MotorcycleRental.Core.Domain.Primitives;
 
 public record DomainEvent : INotification
 {
-    public DomainEvent(ObjectId id)
-    {
-        Id = id;
-    }
-
     [BsonId]
-    public ObjectId Id { get; }
+    public ObjectId Id { get; private set; } = ObjectId.GenerateNewId();
+
+    public DateTime CreatedDate { get; private set; } = DateTime.Now;
 }

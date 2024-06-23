@@ -46,7 +46,7 @@ public class EventSaverTests
     public async Task SaveEventAsync_DomainEvent_ShouldInsertDomainEvent()
     {
         // Arrange
-        var domainEvent = new DomainEvent(ObjectId.GenerateNewId());
+        var domainEvent = new DomainEvent();
 
         // Act
         await _eventSaver.SaveEventAsync(domainEvent);

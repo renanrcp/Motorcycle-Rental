@@ -1,5 +1,6 @@
 using MotorcycleRental.Core.Domain.Abstractions;
 using MotorcycleRental.Core.Domain.Entities;
+using MotorcycleRental.Users.Domain.Events;
 
 namespace MotorcycleRental.Users.Domain.Entities;
 
@@ -12,6 +13,11 @@ public class User : Entity
         Email = email;
         Name = name;
         Password = password;
+
+        Raise(new UserCreatedEvent
+        {
+            Email = email,
+        });
     }
 
     public string Email { get; private set; }

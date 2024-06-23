@@ -4,5 +4,5 @@ namespace MotorcycleRental.Core.Domain.Abstractions;
 
 public interface IDomainEventSaver
 {
-    Task SaveEventAsync(DomainEvent domainEvent);
+    Task SaveEventAsync(DomainEvent domainEvent, CancellationToken cancellationToken = default);
 }

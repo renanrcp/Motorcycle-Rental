@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using MotorcycleRental.Core.Application.Abstractions;
@@ -8,6 +9,8 @@ namespace MotorcycleRental.Core.Application.Implementations;
 
 public class EventSaver : IApplicationEventSaver, IDomainEventSaver
 {
+    private readonly IMediator _mediator;
+
     private readonly IMongoClient _mongoClient;
 
     private readonly IMongoDatabase _mongoDatabase;
@@ -16,9 +19,10 @@ public class EventSaver : IApplicationEventSaver, IDomainEventSaver
 
     private readonly IMongoCollection<ApplicationEvent> _applicationEvents;
 
-    public EventSaver(IMongoClient mongoClient, IHostEnvironment hostEnvironment)
+    public EventSaver(IMongoClient mongoClient, IMediator mediator, IHostEnvironment hostEnvironment)
     {
         _mongoClient = mongoClient;
+        _mediator = mediator;
 
         var applicationName = hostEnvironment.ApplicationName
                                                 .Replace(".", string.Empty)
@@ -33,13 +37,15 @@ public class EventSaver : IApplicationEventSaver, IDomainEventSaver
 
 
 
-    public Task SaveEventAsync(DomainEvent domainEvent)
+    public async Task SaveEventAsync(DomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
-        return _domainEvents.InsertOneAsync(domainEvent);
+        await _mediator.Publish(domainEvent, cancellationToken);
+        await _domainEvents.InsertOneAsync(domainEvent, options: null, cancellationToken);
     }
 
-    public Task SaveEventAsync(ApplicationEvent applicationEvent)
+    public async Task SaveEventAsync(ApplicationEvent applicationEvent, CancellationToken cancellationToken = default)
     {
-        return _applicationEvents.InsertOneAsync(applicationEvent);
+        await _mediator.Publish(applicationEvent, cancellationToken);
+        await _applicationEvents.InsertOneAsync(applicationEvent, options: null, cancellationToken);
     }
 }

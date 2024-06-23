@@ -18,6 +18,8 @@ public static class DependencyInjections
     {
         builder.AddEnvFileIfDevelopment();
 
+        builder.Services.AddHttpContextAccessor();
+
         builder.Services.AddControllers(o =>
         {
             o.Filters.Add<ResponseConventionFilter>(int.MaxValue);

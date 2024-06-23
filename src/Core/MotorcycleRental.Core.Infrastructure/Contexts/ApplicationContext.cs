@@ -5,10 +5,8 @@ using MotorcycleRental.Core.Domain.Entities;
 
 namespace MotorcycleRental.Core.Infrastructure.Contexts;
 
-public abstract class ApplicationContext(DbContextOptions options, IPublisher publisher, IDomainEventSaver domainEventSaver) : DbContext(options)
+public abstract class ApplicationContext(DbContextOptions options, IDomainEventSaver domainEventSaver) : DbContext(options)
 {
-    private readonly IPublisher _publisher = publisher;
-
     private readonly IDomainEventSaver _domainEventSaver = domainEventSaver;
 
     protected virtual void OnSaveChanges()
@@ -21,7 +19,7 @@ public abstract class ApplicationContext(DbContextOptions options, IPublisher pu
         }
     }
 
-    protected virtual async Task OnSaveChangesAsync()
+    protected virtual async Task OnSaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var domainEvents = ChangeTracker
                             .Entries()
@@ -37,8 +35,7 @@ public abstract class ApplicationContext(DbContextOptions options, IPublisher pu
 
         foreach (var domainEvent in domainEvents)
         {
-            await _domainEventSaver.SaveEventAsync(domainEvent);
-            await _publisher.Publish(domainEvent);
+            await _domainEventSaver.SaveEventAsync(domainEvent, cancellationToken);
         }
     }
 
@@ -51,7 +48,7 @@ public abstract class ApplicationContext(DbContextOptions options, IPublisher pu
 
     public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
-        await OnSaveChangesAsync();
+        await OnSaveChangesAsync(cancellationToken);
 
         return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }

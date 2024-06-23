@@ -10,13 +10,16 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MotorcycleRental.Core.Application;
 using MotorcycleRental.Core.Application.VOs;
+using MediatR;
 
 
 namespace MotorcycleRental.Users.Application.Commands.Users.Login;
 
-public class LoginUserCommandHandler(UsersDbContext usersDbContext) : ICommandHandler<LoginUserCommand, UserAuthVO>
+public class LoginUserCommandHandler(UsersDbContext usersDbContext, IApplicationEventSaver applicationEventSaver) : ICommandHandler<LoginUserCommand, UserAuthVO>
 {
     private readonly UsersDbContext _usersDbContext = usersDbContext;
+
+    private readonly IApplicationEventSaver _applicationEventSaver = applicationEventSaver;
 
     public async Task<Result<UserAuthVO>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
     {
@@ -64,6 +67,11 @@ public class LoginUserCommandHandler(UsersDbContext usersDbContext) : ICommandHa
         var stringToken = tokenHandler.WriteToken(token);
 
         userAuth.Token = stringToken;
+
+        await _applicationEventSaver.SaveEventAsync(new UserLoggedEvent
+        {
+            UserId = userAuth.Id,
+        }, cancellationToken);
 
         return userAuth;
     }
