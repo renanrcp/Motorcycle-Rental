@@ -1,25 +1,26 @@
-using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using MotorcycleRental.Core.Application.Abstractions;
-using System.Text.Json.Serialization;
 
 namespace MotorcycleRental.Core.Application.Events;
 
 public record ExceptionEvent : ApplicationEvent
 {
-    public ExceptionEvent(ObjectId Id, Exception exception) : base(Id)
-    {
-        ArgumentNullException.ThrowIfNull(exception);
+    private readonly Exception _exception;
 
-        Exception = exception;
+    public ExceptionEvent(Exception exception)
+    {
+        _exception = exception;
         Message = exception.Message;
         StackTrace = exception.StackTrace;
     }
 
-    [JsonIgnore]
-    public Exception Exception { get; }
+    public string Message { get; private set; }
 
-    public string Message { get; }
+    public string? StackTrace { get; private set; }
 
-    public string? StackTrace { get; }
+    public Exception GetException()
+    {
+        return _exception;
+    }
 }
 

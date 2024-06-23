@@ -19,9 +19,16 @@ public class EventSaver : IApplicationEventSaver, IDomainEventSaver
     public EventSaver(IMongoClient mongoClient, IHostEnvironment hostEnvironment)
     {
         _mongoClient = mongoClient;
-        _mongoDatabase = _mongoClient.GetDatabase($"motorcycle_{hostEnvironment.ApplicationName}_events");
+
+        var applicationName = hostEnvironment.ApplicationName
+                                                .Replace(".", string.Empty)
+                                                .Replace("MotorcycleRental", string.Empty)
+                                                .Replace("Presentation", string.Empty)
+                                                .ToLower();
+
+        _mongoDatabase = _mongoClient.GetDatabase($"motorcycle_{applicationName}_events");
         _domainEvents = _mongoDatabase.GetCollection<DomainEvent>("domain_events");
-        _applicationEvents = _mongoDatabase.GetCollection<ApplicationEvent>("domain_events");
+        _applicationEvents = _mongoDatabase.GetCollection<ApplicationEvent>("application_events");
     }
 
 

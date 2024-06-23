@@ -1,8 +1,11 @@
+using Amazon.Runtime;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using MotorcycleRental.Core.Infrastructure.Contexts;
 
@@ -20,22 +23,25 @@ public static class DependencyInjection
         where TContext : DbContext
     {
         services.AddDbContext<TContext>((sp, options) =>
-       {
-           if (sp.GetRequiredService<IHostEnvironment>().IsDevelopment())
-           {
-               _ = options.EnableDetailedErrors();
-               _ = options.EnableSensitiveDataLogging();
-           }
+        {
+            if (sp.GetRequiredService<IHostEnvironment>().IsDevelopment())
+            {
+                _ = options.EnableDetailedErrors();
+                _ = options.EnableSensitiveDataLogging();
+            }
 
-           _ = options.UseApplicationServiceProvider(sp);
-           _ = options.UseLoggerFactory(sp.GetRequiredService<ILoggerFactory>());
+            _ = options.UseApplicationServiceProvider(sp);
+            _ = options.UseLoggerFactory(sp.GetRequiredService<ILoggerFactory>());
 
-           _ = options.UseNpgsql(sp.GetRequiredService<IConfiguration>().GetConnectionString("Postgres"), postgresOptions =>
-           {
-           });
+            var configuration = sp.GetRequiredService<IConfiguration>();
+            var connectionString = configuration.GetConnectionString("Postgres");
 
-           options.UseSnakeCaseNamingConvention();
-       });
+            _ = options.UseNpgsql(connectionString, postgresOptions =>
+            {
+            });
+
+            options.UseSnakeCaseNamingConvention();
+        });
 
         return services;
     }
@@ -58,6 +64,4 @@ public static class DependencyInjection
 
         return services;
     }
-
-
 }

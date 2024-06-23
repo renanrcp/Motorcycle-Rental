@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MotorcycleRental.Users.Application.Commands.Users.Create;
 
-public class CreateUserCommand : ICommand<User>
+public class CreateUserCommand : ICommand<CreateUserResponse>
 {
     [Required]
     public required string Name { get; init; }

@@ -25,7 +25,7 @@ public class ExceptionHandler(IApplicationEventSaver eventSaver) : IExceptionHan
             error = InternalServerError.CreateUnkwnonError(exception);
         }
 
-        var exceptionEvent = new ExceptionEvent(ObjectId.GenerateNewId(), exception);
+        var exceptionEvent = new ExceptionEvent(exception);
 
         await _eventSaver.SaveEventAsync(exceptionEvent);
 

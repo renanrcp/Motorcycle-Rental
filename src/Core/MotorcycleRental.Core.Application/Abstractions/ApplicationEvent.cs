@@ -6,11 +6,8 @@ namespace MotorcycleRental.Core.Application.Abstractions;
 
 public record ApplicationEvent : INotification
 {
-    public ApplicationEvent(ObjectId id)
-    {
-        Id = id;
-    }
-
     [BsonId]
-    public ObjectId Id { get; }
+    public ObjectId Id { get; private set; } = ObjectId.GenerateNewId();
+
+    public DateTime CreatedDate { get; private set; } = DateTime.Now;
 }

@@ -8,11 +8,25 @@ services:
       - 5432:5432
     volumes:
       - motorcycle_rental_postgres_data:/var/lib/postgresql/data
+    networks:
+      - motorcycle_rental
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U local_cpavalanche" ]
       interval: 2s
       timeout: 5s
       retries: 10
+
+  mongo:
+    image: mongo
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 27017:27017
+    volumes:
+      - motorcycle_rental_mongo_data:/data/db
+    networks:
+      - motorcycle_rental
 
   migrator:
     build:
@@ -26,7 +40,15 @@ services:
         condition: service_healthy
     links:
       - db:db
+    networks:
+      - motorcycle_rental
+
+networks:
+  motorcycle_rental:
+    driver: bridge
 
 volumes:
   motorcycle_rental_postgres_data:
+    external: true
+  motorcycle_rental_mongo_data:
     external: true

@@ -11,11 +11,11 @@ using BC = BCrypt.Net.BCrypt;
 
 namespace MotorcycleRental.Users.Application.Commands.Users.Create;
 
-public class CreateUserCommandHandler(UsersDbContext usersDbContext) : ICommandHandler<CreateUserCommand, User>
+public class CreateUserCommandHandler(UsersDbContext usersDbContext) : ICommandHandler<CreateUserCommand, CreateUserResponse>
 {
     private readonly UsersDbContext _usersDbContext = usersDbContext;
 
-    public async Task<Result<User>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<CreateUserResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var userExistsWithEmail = await _usersDbContext.Users
                                             .WhereEmail(request.Email)
@@ -43,6 +43,11 @@ public class CreateUserCommandHandler(UsersDbContext usersDbContext) : ICommandH
         await _usersDbContext.Users.AddAsync(user, cancellationToken);
         await _usersDbContext.SaveChangesAsync(cancellationToken);
 
-        return user;
+        return new CreateUserResponse
+        {
+            Email = user.Email,
+            Name = user.Name,
+            Permissions = user.GetAllPermissions(),
+        };
     }
 }
