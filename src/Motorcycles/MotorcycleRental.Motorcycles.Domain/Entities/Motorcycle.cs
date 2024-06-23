@@ -25,6 +25,16 @@ public class Motorcycle : Entity
     {
         LicensePlate = licensePlate;
 
+        if (Id != 0)
+        {
+            Raise(new MotorcycleLicensePlateUpdatedEvent
+            {
+                MotorcycleId = Id,
+                LicensePlate = LicensePlate,
+            });
+        }
+
+
         return Result.Success;
     }
 
