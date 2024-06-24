@@ -8,13 +8,14 @@ public class Deliverer : Entity
 {
     private readonly List<DelivererImage> _images = [];
 
-    private Deliverer(int id, string cnpj, string cnh, CnhType cnhType, string name)
+    private Deliverer(int id, string cnpj, string cnh, CnhType cnhType, string name, DateOnly birthDate)
     {
         Id = id;
         Cnpj = cnpj;
         Cnh = cnh;
         CnhType = cnhType;
         Name = name;
+        BirthDate = birthDate;
 
         Raise(new DelivererCreatedEvent
         {
@@ -30,11 +31,13 @@ public class Deliverer : Entity
 
     public string Name { get; private set; }
 
+    public DateOnly BirthDate { get; private set; }
+
     public IReadOnlyList<DelivererImage> Images => _images;
 
-    public static Result<Deliverer> Create(int id, string cnpj, string cnh, CnhType cnhType, string name)
+    public static Result<Deliverer> Create(int id, string cnpj, string cnh, CnhType cnhType, string name, DateOnly birthDate)
     {
-        var deliverer = new Deliverer(id, cnpj, cnh, cnhType, name);
+        var deliverer = new Deliverer(id, cnpj, cnh, cnhType, name, birthDate);
 
         return deliverer;
     }

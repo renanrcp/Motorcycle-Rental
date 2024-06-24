@@ -27,7 +27,7 @@ public static class DependencyInjections
         .AddJsonOptions(o =>
         {
             o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-            o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter<PermissionType>());
+            o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         });
 
         builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();

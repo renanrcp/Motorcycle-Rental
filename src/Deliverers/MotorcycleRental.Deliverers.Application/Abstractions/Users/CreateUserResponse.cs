@@ -1,6 +1,6 @@
 using MotorcycleRental.Core.Domain.Entities;
 
-namespace MotorcycleRental.Users.Application.Commands.Users.Create;
+namespace MotorcycleRental.Deliverers.Application.Abstractions.Users;
 
 public class CreateUserResponse
 {

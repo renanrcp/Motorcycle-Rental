@@ -6,6 +6,7 @@ using MotorcycleRental.Users.Domain.Entities;
 using MotorcycleRental.Users.Infrastructure.Contexts;
 
 using BC = BCrypt.Net.BCrypt;
+using System.Data.Common;
 
 
 namespace MotorcycleRental.Users.Application.Commands.Users.Create;
@@ -44,6 +45,7 @@ public class CreateUserCommandHandler(UsersDbContext usersDbContext) : ICommandH
 
         return new CreateUserResponse
         {
+            Id = user.Id,
             Email = user.Email,
             Name = user.Name,
             Permissions = user.GetAllPermissions(),

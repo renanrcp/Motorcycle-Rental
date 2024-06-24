@@ -31,12 +31,13 @@ public class ResponseConventionFilter : IAsyncAlwaysRunResultFilter
 
         var statusCode = error switch
         {
-            BadRequestError => HttpStatusCode.BadRequest,
-            ForbiddenError => HttpStatusCode.Forbidden,
-            NotFoundError => HttpStatusCode.NotFound,
-            UnprocessableEntityError => HttpStatusCode.UnprocessableEntity,
-            InternalServerError => HttpStatusCode.InternalServerError,
-            _ => HttpStatusCode.InternalServerError,
+            BadRequestError => StatusCodes.Status400BadRequest,
+            ForbiddenError => StatusCodes.Status403Forbidden,
+            NotFoundError => StatusCodes.Status404NotFound,
+            UnprocessableEntityError => StatusCodes.Status422UnprocessableEntity,
+            InternalServerError => StatusCodes.Status500InternalServerError,
+            StatusCodeError statusCodeError => statusCodeError.StatusCode,
+            _ => StatusCodes.Status500InternalServerError,
         };
 
         var exception = (error as InternalServerError)?.Exception;
@@ -75,7 +76,7 @@ public class ResponseConventionFilter : IAsyncAlwaysRunResultFilter
 
         context.Result = new ObjectResult(errorResponse)
         {
-            StatusCode = (int)statusCode,
+            StatusCode = statusCode,
         };
         await next();
     }
