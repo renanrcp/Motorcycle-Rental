@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MotorcycleRental.Motorcycles.Domain\MotorcycleRental.Motorcycles.Domain.csproj" />
-    <ProjectReference Include="..\..\Rentals\MotorcycleRental.Rentals.Domain\MotorcycleRental.Rentals.Domain.csproj" />
+    <ProjectReference Include="..\MotorcycleRental.Rentals.Domain\MotorcycleRental.Rentals.Domain.csproj" />
     <ProjectReference Include="..\..\Core\MotorcycleRental.Core.Infrastructure\MotorcycleRental.Core.Infrastructure.csproj" />
   </ItemGroup>
 

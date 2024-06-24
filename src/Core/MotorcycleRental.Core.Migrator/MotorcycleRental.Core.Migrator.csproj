@@ -11,6 +11,7 @@
     <ProjectReference Include="..\..\Users\MotorcycleRental.Users.Infrastructure\MotorcycleRental.Users.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Motorcycles\MotorcycleRental.Motorcycles.Infrastructure\MotorcycleRental.Motorcycles.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Deliverers\MotorcycleRental.Deliverers.Infrastructure\MotorcycleRental.Deliverers.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Rentals\MotorcycleRental.Rentals.Infrastructure\MotorcycleRental.Rentals.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

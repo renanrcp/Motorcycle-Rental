@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MotorcycleRental.Deliverers.Domain.Entities;
+using MotorcycleRental.Rentals.Domain.Entities;
 
 namespace MotorcycleRental.Deliverers.Infrastructure.Configurations;
 
@@ -14,5 +15,11 @@ public class DelivererEntityTypeConfiguration : IEntityTypeConfiguration<Deliver
             .HasMany(x => x.Images)
             .WithOne()
             .HasForeignKey(x => x.DelivererId);
+
+        builder
+            .HasOne<Rental>()
+            .WithOne()
+            .HasForeignKey<Rental>(x => x.DelivererId)
+            .IsRequired();
     }
 }
