@@ -1,0 +1,183 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:12.2-alpine
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 5432:5432
+    volumes:
+      - motorcycle_rental_postgres_data:/var/lib/postgresql/data
+    networks:
+      - motorcycle_rental
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U local_cpavalanche" ]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+  mongo:
+    image: mongo
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 27017:27017
+    volumes:
+      - motorcycle_rental_mongo_data:/data/db
+    networks:
+      - motorcycle_rental
+
+  migrator:
+    build:
+      context: ./
+      dockerfile: src/Core/MotorcycleRental.Core.Migrator/Dockerfile
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+      - db:db
+    networks:
+      - motorcycle_rental
+
+  users:
+    build:
+      context: ./
+      dockerfile: src/Users/MotorcycleRental.Users.Presentation/Dockerfile
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      mongo:
+        condition: service_started
+      migrator:
+        condition: service_started
+    # links:
+    #   - db:db
+    #   - mongo:mongo
+    ports:
+      - "5000:5000"
+    networks:
+      - motorcycle_rental
+    volumes:
+      - ./logs/users:/App/logs
+
+  deliverers:
+    build:
+      context: ./
+      dockerfile: src/Deliverers/MotorcycleRental.Deliverers.Presentation/Dockerfile
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      mongo:
+        condition: service_started
+      migrator:
+        condition: service_started
+    # links:
+    #   - db:db
+    #   - mongo:mongo
+    #   - users:users
+    ports:
+      - "5001:5001"
+    networks:
+      - motorcycle_rental
+    volumes:
+      - ./images:/App/images
+      - ./logs/deliverers:/App/logs
+
+  motorcycles:
+    build:
+      context: ./
+      dockerfile: src/Motorcycles/MotorcycleRental.Motorcycles.Presentation/Dockerfile
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      mongo:
+        condition: service_started
+      migrator:
+        condition: service_started
+    # links:
+    #   - db:db
+    #   - mongo:mongo
+    #   - rentals:rentals
+    ports:
+      - "5002:5002"
+    networks:
+      - motorcycle_rental
+    volumes:
+      - ./logs/motorcycles:/App/logs
+
+  rentals:
+    build:
+      context: ./
+      dockerfile: src/Rentals/MotorcycleRental.Rentals.Presentation/Dockerfile
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      mongo:
+        condition: service_started
+      migrator:
+        condition: service_started
+    # links:
+    #   - db:db
+    #   - mongo:mongo
+    #   - deliverers:deliverers
+    #   - motorcycles:motorcycles
+    ports:
+      - "5003:5003"
+    networks:
+      - motorcycle_rental
+    volumes:
+      - ./logs/rentals:/App/logs
+
+  web:
+    image: nginx:1.17.10-alpine
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 80:80
+    depends_on:
+      users:
+        condition: service_started
+      deliverers:
+        condition: service_started
+      motorcycles:
+        condition: service_started
+      rentals:
+        condition: service_started
+    # links:
+    #   - users:users
+    #   - deliverers:deliverers
+    #   - motorcycles:motorcycles
+    #   - rentals:rentals
+    networks:
+      - motorcycle_rental
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+
+networks:
+  motorcycle_rental:
+    driver: bridge
+
+volumes:
+  motorcycle_rental_postgres_data:
+    external: true
+  motorcycle_rental_mongo_data:
+    external: true

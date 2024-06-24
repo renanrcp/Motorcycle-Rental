@@ -5,7 +5,7 @@ COPY . .
 
 RUN dotnet restore
 RUN dotnet build -c Release
-RUN dotnet publish ./src/Users/MotorcycleRental.Users.Presentation/MotorcycleRental.Users.Presentation.csproj -c Release -o /App
+RUN dotnet publish ./src/Rentals/MotorcycleRental.Rentals.Presentation/MotorcycleRental.Rentals.Presentation.csproj -c Release -o /App
 
 ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
 
@@ -17,4 +17,4 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR /App
 COPY --from=build /App .
 
-ENTRYPOINT ["dotnet", "MotorcycleRental.Users.Presentation.dll", "--urls=http://+:5000"]
+ENTRYPOINT ["dotnet", "MotorcycleRental.Rentals.Presentation.dll", "--urls=http://+:5003"]

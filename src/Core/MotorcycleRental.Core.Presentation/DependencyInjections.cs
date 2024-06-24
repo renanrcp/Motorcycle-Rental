@@ -7,6 +7,8 @@ using MotorcycleRental.Core.Domain.Entities;
 using MotorcycleRental.Core.Presentation.Filters;
 using MotorcycleRental.Core.Presentation.Handlers;
 using MotorcycleRental.Core.Presentation.Results;
+using Serilog;
+using Serilog.Events;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -16,6 +18,12 @@ public static class DependencyInjections
 {
     public static WebApplicationBuilder AddPresentationCore(this WebApplicationBuilder builder)
     {
+        builder.Host.UseSerilog((ctx, lc) => lc
+            .WriteTo.Console(LogEventLevel.Debug)
+            .WriteTo.File(Path.Join("logs", "log.txt"),
+                LogEventLevel.Warning,
+                rollingInterval: RollingInterval.Day));
+
         builder.AddEnvFileIfDevelopment();
 
         builder.Services.AddHttpContextAccessor();
@@ -58,6 +66,9 @@ public static class DependencyInjections
 
         builder.Services.AddScoped<IAuthorizationHandler, RequirePermissionsAuthorizationHandler>();
 
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
         return builder;
     }
 
@@ -91,12 +102,32 @@ public static class DependencyInjections
 
     public static WebApplication UsePresentationCoreMiddlewares(this WebApplication app)
     {
+        app.UseSerilogRequestLogging();
+
         app.UseExceptionHandler(o => { });
+
+        var applicationName = app.Services.GetRequiredService<IHostEnvironment>().ApplicationName
+                                                .Replace(".", string.Empty)
+                                                .Replace("MotorcycleRental", string.Empty)
+                                                .Replace("Presentation", string.Empty)
+                                                .ToLower();
+
+        app.UseSwagger(c =>
+        {
+            c.RouteTemplate = applicationName + "/swagger/{documentName}/swagger.json";
+        });
+
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint($"/{applicationName}/swagger/v1/swagger.json", $"{applicationName} API");
+            c.RoutePrefix = $"{applicationName}/swagger";
+        });
 
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.MapControllers();
+        app.MapControllers()
+           .WithOpenApi();
 
         return app;
     }
