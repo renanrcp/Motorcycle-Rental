@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../../../MotorcycleRental.targets" />
+  
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\MotorcycleRental.Core.Domain\MotorcycleRental.Core.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
