@@ -4,6 +4,11 @@ namespace MotorcycleRental.Deliverers.Infrastructure.Queries;
 
 public static class DelivererQueries
 {
+    public static IQueryable<Deliverer> WhereId(this IQueryable<Deliverer> query, int id)
+    {
+        return query.Where(x => x.Id.Equals(id));
+    }
+
     public static IQueryable<Deliverer> WhereCnh(this IQueryable<Deliverer> query, string cnh)
     {
         return query.Where(x => x.Cnh.Equals(cnh));

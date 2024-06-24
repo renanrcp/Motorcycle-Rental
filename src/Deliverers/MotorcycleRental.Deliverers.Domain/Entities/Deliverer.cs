@@ -35,6 +35,13 @@ public class Deliverer : Entity
 
     public IReadOnlyList<DelivererImage> Images => _images;
 
+    public Result AddImage(DelivererImage image)
+    {
+        _images.Add(image);
+
+        return Result.Success;
+    }
+
     public static Result<Deliverer> Create(int id, string cnpj, string cnh, CnhType cnhType, string name, DateOnly birthDate)
     {
         var deliverer = new Deliverer(id, cnpj, cnh, cnhType, name, birthDate);
