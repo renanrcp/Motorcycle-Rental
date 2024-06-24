@@ -19,7 +19,7 @@ public static class DependencyInjections
             }
             else
             {
-                options.BaseAddress = new Uri("http://users:5000/");
+                options.BaseAddress = new Uri("http://users/");
             }
 
         })

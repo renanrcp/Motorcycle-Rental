@@ -60,7 +60,7 @@ public class UserAuthVO
                     : [Enum.Parse<PermissionType>(permissionsClaim!)];
 
         var token = parseToken
-            ? httpContext.Request.Headers.Authorization
+            ? httpContext.Request.Headers.Authorization.ToString().Replace("Bearer ", string.Empty)
             : default;
 
         return new()

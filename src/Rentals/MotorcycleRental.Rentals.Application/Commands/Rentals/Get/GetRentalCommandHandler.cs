@@ -44,7 +44,7 @@ public class GetRentalCommandHandler(
         return new GetRentalResponse
         {
             DelivererId = rental.DelivererId,
-            EndDate = rental.EndDate!.Value,
+            EndDate = rental.EndDate,
             ExpectedEndDate = rental.ExpectedEndDate,
             MotorcycleId = rental.MotorcycleId,
             RentalTypeId = rental.RentalTypeId,
