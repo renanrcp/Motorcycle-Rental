@@ -39,6 +39,12 @@ public class Deliverer : Entity
     {
         _images.Add(image);
 
+        Raise(new DelivererImageCreatedEvent
+        {
+            DelivererId = Id,
+            Path = image.Path,
+        });
+
         return Result.Success;
     }
 
