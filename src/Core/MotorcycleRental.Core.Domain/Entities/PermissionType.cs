@@ -11,4 +11,6 @@ public enum PermissionType
     CanCreateMotorcycle = 3,
 
     CanUpdateMotorcycles = 4,
+
+    CanDeleteMotorcycles = 5,
 }

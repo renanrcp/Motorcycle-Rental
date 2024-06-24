@@ -5,6 +5,7 @@ using MotorcycleRental.Core.Domain.Entities;
 using MotorcycleRental.Core.Presentation.Controllers;
 using MotorcycleRental.Core.Presentation.Requirements;
 using MotorcycleRental.Motorcycles.Application.Commands.Create;
+using MotorcycleRental.Motorcycles.Application.Commands.Delete;
 using MotorcycleRental.Motorcycles.Application.Commands.Get;
 using MotorcycleRental.Motorcycles.Application.Commands.List;
 using MotorcycleRental.Motorcycles.Application.Commands.Update;
@@ -55,5 +56,19 @@ public class MotorcyclesController(IMediator mediator) : AuthorizeController
         var updateMotorcycleLicensePlateCommandResult = await _mediator.Send(updateMotorcycleLicensePlateCommand);
 
         return ToActionResult(updateMotorcycleLicensePlateCommandResult);
+    }
+
+    [HttpDelete("{id}")]
+    [RequirePermissions(PermissionType.CanDeleteMotorcycles)]
+    public async Task<IActionResult> Delete([FromRoute] int id)
+    {
+        var deleteMotorcycleCommand = new DeleteMotorcycleCommand
+        {
+            MotorycleId = id,
+        };
+
+        var deleteMotorcycleResult = await _mediator.Send(deleteMotorcycleCommand);
+
+        return ToActionResult(deleteMotorcycleResult);
     }
 }

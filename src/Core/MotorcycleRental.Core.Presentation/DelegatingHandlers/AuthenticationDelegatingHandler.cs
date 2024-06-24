@@ -1,6 +1,6 @@
 using System.Net.Http.Headers;
 
-namespace MotorcycleRental.Rentals.Presentation.DelegatingHandlers;
+namespace MotorcycleRental.Core.Presentation.DelegatingHandlers;
 
 public class AuthenticationDelegatingHandler(IHttpContextAccessor httpContextAccessor) : DelegatingHandler
 {

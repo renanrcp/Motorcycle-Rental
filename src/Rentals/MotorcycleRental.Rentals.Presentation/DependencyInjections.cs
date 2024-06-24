@@ -1,7 +1,7 @@
 using MotorcycleRental.Core.Presentation;
+using MotorcycleRental.Core.Presentation.DelegatingHandlers;
 using MotorcycleRental.Rentals.Application.Abstractions.Deliverers;
 using MotorcycleRental.Rentals.Application.Abstractions.Motorcycles;
-using MotorcycleRental.Rentals.Presentation.DelegatingHandlers;
 using MotorcycleRental.Rentals.Presentation.Implementations;
 using Polly;
 
