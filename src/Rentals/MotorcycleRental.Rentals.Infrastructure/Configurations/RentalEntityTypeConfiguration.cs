@@ -10,6 +10,9 @@ public class RentalEntityTypeConfiguration : IEntityTypeConfiguration<Rental>
     {
         builder.HasKey(x => x.Id);
 
+        builder.HasIndex(x => x.MotorcycleId).IsUnique();
+        builder.HasIndex(x => x.DelivererId).IsUnique();
+
         builder
            .HasOne(x => x.RentalType)
            .WithMany()
